@@ -14,7 +14,7 @@ const Edit = () => {
       <button onClick={() => setSearchParams({ who: "mukho" })}>바꿔.</button>
       <button
         onClick={() => {
-          navigate("/home");
+          navigate("/");
         }}
       >
         go home

@@ -4,7 +4,7 @@
 
 ## 기술
 
-JavaScript, React.js
+JavaScript, React.js, Firebase
 
 ## Special Thanks To
 

@@ -66,7 +66,7 @@
 
 - 1. `npm run build`
 - 2. `sudo npm install -g serve`
-- 3. `serve -s build`
+- 3. `serve -s build` / `firebase deploy`
 
 ## ETC
 

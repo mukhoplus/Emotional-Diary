@@ -70,3 +70,4 @@
 - localStorage에 저장되고, 그곳에서 가져오는 값은 모두 **문자열**이다.
   - 숫자는 `parseInt()`, 객체는 `JSON.parse()`로 복호화하자.
 - `React.memo()`는 신이야
+- 함수의 리랜더링을 피하기 위해 `useCallback()` 사용

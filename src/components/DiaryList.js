@@ -1,11 +1,11 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MyButton from "./MyButton";
 import DiaryItem from "./DiaryItem";
 
 const sortOptionList = [
-  { value: "lastest", name: "최신순" },
-  { value: "oldest", name: "오래된순" },
+  { value: "lastest", name: "최신 순" },
+  { value: "oldest", name: "오래된 순" },
 ];
 
 const filterOptionList = [
@@ -15,7 +15,7 @@ const filterOptionList = [
   { value: "bad", name: "슬픔" },
 ];
 
-const ControlMenu = ({ value, onChange, optionList }) => {
+const ControlMenu = React.memo(({ value, onChange, optionList }) => {
   return (
     <select
       className="ControlMenu"
@@ -29,12 +29,20 @@ const ControlMenu = ({ value, onChange, optionList }) => {
       ))}
     </select>
   );
-};
+});
 
 const DiaryList = ({ diaryList }) => {
   const navigate = useNavigate();
   const [sortType, setSortType] = useState("lastest");
   const [filter, setFilter] = useState("all");
+
+  const setSortTypeHandler = (sortType) => {
+    setSortType(sortType);
+  };
+
+  const setFilterHandler = (filter) => {
+    setFilter(filter);
+  };
 
   const getProcessedDiaryList = () => {
     const compare = (a, b) => {
@@ -46,9 +54,9 @@ const DiaryList = ({ diaryList }) => {
     };
 
     const filterCallback = (it) => {
-      if (filter === "good") return parseInt(it.emotion) > 3;
+      if (filter === "good") return parseInt(it.emotion) < 3;
       else if (filter === "soso") return parseInt(it.emotion) === 3;
-      else if (filter === "bad") return parseInt(it.emotion) < 3;
+      else if (filter === "bad") return parseInt(it.emotion) > 3;
     };
 
     const copyList = JSON.parse(JSON.stringify(diaryList));
@@ -65,13 +73,13 @@ const DiaryList = ({ diaryList }) => {
         <div className="left_col">
           <ControlMenu
             value={sortType}
-            onChange={setSortType}
+            onChange={setSortTypeHandler}
             optionList={sortOptionList}
           />
 
           <ControlMenu
             value={filter}
-            onChange={setFilter}
+            onChange={setFilterHandler}
             optionList={filterOptionList}
           />
         </div>

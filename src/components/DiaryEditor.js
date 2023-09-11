@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import MyHeader from "../components/MyHeader";
@@ -10,7 +10,7 @@ const getStringDate = (date) => {
   return date.toISOString().slice(0, 10);
 };
 
-const PUBLIC_URL = process.env.PUBLIC_URL;
+const PUBLIC_URL = "http://localhost:3000/";
 const emotionList = [
   {
     emotion_id: 1,
@@ -39,13 +39,13 @@ const emotionList = [
   },
 ];
 
-const DiaryEditor = () => {
-  const [emotion, setEmotion] = useState(3);
+const DiaryEditor = ({ isEdit, originData }) => {
   const [date, setDate] = useState(getStringDate(new Date()));
+  const [emotion, setEmotion] = useState(3);
   const [content, setContent] = useState("");
   const contentRef = useRef();
   const navigate = useNavigate();
-  const { onCreate } = useContext(DiaryDispatchContext);
+  const { onCreate, onEdit } = useContext(DiaryDispatchContext);
 
   const clickEmotionHandler = (emotion) => {
     setEmotion(emotion);
@@ -57,14 +57,30 @@ const DiaryEditor = () => {
       return;
     }
 
-    onCreate(date, content, emotion);
+    if (
+      window.confirm(
+        isEdit ? "일기를 수정하시겠습니까?" : "새로운 일기를 작성하시겠습니까?"
+      )
+    ) {
+      if (!isEdit) onCreate(date, content, emotion);
+      else onEdit(originData.id, date, content, emotion);
+    }
+
     navigate("/", { replace: true });
   };
+
+  useEffect(() => {
+    if (isEdit) {
+      setDate(getStringDate(new Date(parseInt(originData.date))));
+      setEmotion(originData.emotion);
+      setContent(originData.content);
+    }
+  }, [isEdit, originData]);
 
   return (
     <div className="DiaryEditor">
       <MyHeader
-        headText={"새 일기쓰기"}
+        headText={isEdit ? "일기 수정하기" : "새 일기쓰기"}
         leftChild={
           <MyButton text={"< 뒤로가기"} onClick={() => navigate(-1)} />
         }

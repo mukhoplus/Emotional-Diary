@@ -62,6 +62,12 @@
 - `window.***Storage` 속성을 통해 사용할 수 있다.
   - 지원하는 브라우저에서는 WindowLocalStorage와 WindowSessionStorage 객체를 구현한다.
 
+## 배포
+
+- 1. `npm run build`
+- 2. `sudo npm install -g serve`
+- 3. `serve -s build`
+
 ## ETC
 
 - 리액트 라우터를 사용하게 되면 `<a> 태그`는 외부 링크 이동에만 사용한다.

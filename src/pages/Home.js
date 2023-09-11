@@ -15,8 +15,8 @@ const Home = () => {
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName("title")[0];
-    titleElement.innerHTML("묵호 - 감정 일기장");
-  });
+    titleElement.innerHTML = "묵호 - 감정 일기장";
+  }, []);
 
   useEffect(() => {
     if (diaryList.length === 0) return;
